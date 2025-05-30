@@ -70,7 +70,7 @@ public class TaskServiceImpl implements TaskService{
 	@Override
 	public String deleteTaskById(DeleteTaskById request) {
 		repository.deleteById(request.getId());
-		return "Task With Id: "+request.getId()+"Was Deleted";
+		return "Task With Id: "+request.getId()+" Was Deleted";
 	}
 
 	@Override

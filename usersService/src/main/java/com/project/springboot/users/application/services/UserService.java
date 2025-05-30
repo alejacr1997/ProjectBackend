@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.project.springboot.users.application.model.CompleteUser;
 import com.project.springboot.users.application.model.DeleteUserByIdRequest;
 import com.project.springboot.users.application.model.GetUserByUsernameRequest;
 import com.project.springboot.users.application.model.SaveUserRequest;
@@ -17,13 +18,13 @@ public interface UserService {
 
 	public String createUser(SaveUserRequest request);
 	
-	public User getUser(Long id);
+	public CompleteUser getUser(Long id);
 	
 	public String deleteUser(@Valid DeleteUserByIdRequest request);
 	
 	public String updateUser(UpdateUserRequest request);
 	
-	public User getUserByUsername(GetUserByUsernameRequest request);
+	public CompleteUser getUserByUsername(GetUserByUsernameRequest request);
 	
 	public List<User> getAllUsers();
 	

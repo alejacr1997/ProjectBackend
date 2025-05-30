@@ -25,8 +25,15 @@ public class CustomExceptionsHandler {
 	
 	@ExceptionHandler(NoTasksForUsername.class)
 	public ResponseEntity<ErrorResponse> handleNoTasksForUsername(NoTasksForUsername request){
-		logger.error("bad request exception");
+		logger.error("no tasks for username");
 		ErrorResponse response = new ErrorResponse("ERR002", request.getMessage());
+		return new ResponseEntity<ErrorResponse>(response, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(NoTaskWithId.class)
+	public ResponseEntity<ErrorResponse> handleNoTasksWithId(NoTaskWithId request){
+		logger.error("no tasks with id");
+		ErrorResponse response = new ErrorResponse("ERR003", request.getMessage());
 		return new ResponseEntity<ErrorResponse>(response, HttpStatus.NOT_FOUND);
 	}
 }

@@ -6,9 +6,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.project.springboot.users.application.model.CompleteUser;
+import com.project.springboot.users.application.model.DeleteAllTasksUserRequest;
 import com.project.springboot.users.application.model.DeleteUserByIdRequest;
+import com.project.springboot.users.application.model.GetTasksForUserRequest;
 import com.project.springboot.users.application.model.GetUserByUsernameRequest;
 import com.project.springboot.users.application.model.SaveUserRequest;
+import com.project.springboot.users.application.model.Task;
 import com.project.springboot.users.application.model.UpdateUserRequest;
 import com.project.springboot.users.application.model.User;
 import com.project.springboot.users.application.repository.UserDatabaseRepository;
@@ -21,6 +25,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserDatabaseRepository repository;
+	
+	@Autowired
+	TaskServiceConnection taskService;
 	
 	@Autowired
 	Utils utils;
@@ -43,12 +50,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUser(Long id) {
+	public CompleteUser getUser(Long id) {
 		Optional<User> optionalUser = repository.findById(id);
 		if (optionalUser.isEmpty()) {
 			throw new UserDoesNotExists("Can Not Get User It Does Not Exist");
 		}
-		return optionalUser.get();
+		User user = optionalUser.get();
+		GetTasksForUserRequest request = new GetTasksForUserRequest(user.getUsername());
+		List<Task> tasks = taskService.getTasksForUser(request);
+		return new CompleteUser(user, tasks);
 	}
 
 	@Override
@@ -71,7 +81,7 @@ public class UserServiceImpl implements UserService{
 		List<User> users = new ArrayList<>();
 		Iterable<User> all = repository.findAll();
 		if (!all.iterator().hasNext()) {
-			throw new NoUsersCreated("No existen usuarios en la base de datos");
+			throw new NoUsersCreated("No Users Found In Database");
 		}
 		all.forEach(item -> users.add(item));
 		return users;
@@ -83,17 +93,25 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String deleteUser(DeleteUserByIdRequest request) {
+		Optional<User> byId = repository.findById(request.getId());
+		if (!byId.isPresent()) {
+			throw new UserDoesNotExists("User with id: "+request.getId()+" does not exist");
+		}
+		User user = byId.get();
 		repository.deleteById(request.getId());
-		return "Usuario con id: "+request.getId()+" eliminado";
+		String responseTask = taskService.deleteTasksOfUser(new DeleteAllTasksUserRequest(user.getUsername()));
+		return "User with id: "+request.getId()+" eliminated and " + responseTask;
 	}
 
 	@Override
-	public User getUserByUsername(GetUserByUsernameRequest request) {
+	public CompleteUser getUserByUsername(GetUserByUsernameRequest request) {
 		User byUsername = repository.findByUsername(request.getUsername());
 		if (byUsername == null) {
-			throw new UserDoesNotExists("Usuario: "+request.getUsername()+" No existe en la base de datos");
+			throw new UserDoesNotExists("User: "+request.getUsername()+" not found in the database");
 		}
-		return byUsername;
+		GetTasksForUserRequest requestTask = new GetTasksForUserRequest(byUsername.getUsername());
+		List<Task> tasks = taskService.getTasksForUser(requestTask);
+		return new CompleteUser(byUsername, tasks);
 	}
 
 	public String getPassword(Long id) {
@@ -101,7 +119,7 @@ public class UserServiceImpl implements UserService{
 		if(optional.isPresent()) {
 			return optional.get().getPassword();
 		}
-		throw new UserDoesNotExists("Usuario no ha sido creado, no puede ser actualizado ni consultado");
+		throw new UserDoesNotExists("User does not exist, it can not be updated or found");
 	}
 
 	

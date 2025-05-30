@@ -64,7 +64,7 @@ public class TasksController {
 		return service.getTaskById(request);
 	}
 	
-	@DeleteMapping("DeleteTaskId")
+	@DeleteMapping("deleteTaskId")
 	public String deleteTaskBtId(@Valid @RequestBody DeleteTaskById request, BindingResult result) throws BadRequestException {
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Delete Task By Id");
@@ -72,7 +72,7 @@ public class TasksController {
 		return service.deleteTaskById(request);
 	}
 	
-	@DeleteMapping("DeleteTaskUser")
+	@DeleteMapping("deleteTaskUser")
 	public String deleteTaskForUser(@Valid @RequestBody DeleteAllTasksUserRequest request, BindingResult result) throws BadRequestException {
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Delete Task By Id");

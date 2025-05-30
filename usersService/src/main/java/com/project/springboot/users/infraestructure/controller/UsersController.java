@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.springboot.users.application.model.CompleteUser;
 import com.project.springboot.users.application.model.DeleteUserByIdRequest;
 import com.project.springboot.users.application.model.GetUserByIdRequest;
 import com.project.springboot.users.application.model.GetUserByUsernameRequest;
@@ -49,7 +50,7 @@ public class UsersController {
 	}
 	
 	@GetMapping("getUserById")
-	public User getUserById(@Valid @ModelAttribute GetUserByIdRequest request, BindingResult result) throws BadRequestException {
+	public CompleteUser getUserById(@Valid @ModelAttribute GetUserByIdRequest request, BindingResult result) throws BadRequestException {
 		logger.info("Enter Get User By Id:  {}",request.getId());
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Get User By ID");
@@ -67,7 +68,7 @@ public class UsersController {
 	}
 	
 	@GetMapping("getUserByUsername")
-	public User getUserByUsername(@Valid @ModelAttribute GetUserByUsernameRequest request, BindingResult result) throws BadRequestException {
+	public CompleteUser getUserByUsername(@Valid @ModelAttribute GetUserByUsernameRequest request, BindingResult result) throws BadRequestException {
 		logger.info("Enter Get User By Username");
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Get User By ID");
