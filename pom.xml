@@ -11,6 +11,7 @@
     <modules>
         <module>springconfigapi</module>
         <module>usersService</module>
+        <module>tasksService</module>
     </modules>
 
     <dependencyManagement>
