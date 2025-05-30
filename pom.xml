@@ -12,6 +12,7 @@
         <module>springconfigapi</module>
         <module>usersService</module>
         <module>tasksService</module>
+        <module>eurekaService</module>
     </modules>
 
     <dependencyManagement>
