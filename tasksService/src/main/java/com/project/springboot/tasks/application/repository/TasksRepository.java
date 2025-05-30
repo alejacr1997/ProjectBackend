@@ -1,12 +1,12 @@
 package com.project.springboot.tasks.application.repository;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.project.springboot.tasks.application.model.Task;
 
-public interface TasksInterface extends MongoRepository<Task, Long>{
+public interface TasksRepository extends MongoRepository<Task, String>{
 
-	Task findByTitle(String title);
+	List<Task> findByUsername(String username);
 }

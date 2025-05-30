@@ -1,6 +1,7 @@
 package com.project.springboot.users.application.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import lombok.Data;
 @Data
 public class User {
 	@Id
+	@GeneratedValue
 	private Long id;
 	private String username;
 	private String password;

@@ -8,7 +8,7 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.project.springboot.</groupId>
+	<groupId>com.project.springboot</groupId>
 	<artifactId>springconfigapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springconfigapi</name>

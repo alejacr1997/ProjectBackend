@@ -76,7 +76,7 @@ public class UsersController {
 	}
 	
 	@DeleteMapping("deleteUser")
-	public String deleteUserById(@Valid @ModelAttribute DeleteUserByIdRequest request, BindingResult result) throws BadRequestException {
+	public String deleteUserById(@Valid @RequestBody DeleteUserByIdRequest request, BindingResult result) throws BadRequestException {
 		logger.info("Enter Delete User By Id {}",request.getId());
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Get User By ID");
