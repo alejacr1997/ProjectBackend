@@ -13,6 +13,7 @@
         <module>usersService</module>
         <module>tasksService</module>
         <module>eurekaService</module>
+        <module>gateway</module>
     </modules>
 
     <dependencyManagement>
