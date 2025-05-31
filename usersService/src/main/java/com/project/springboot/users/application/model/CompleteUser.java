@@ -9,7 +9,6 @@ public class CompleteUser {
 
 	private Long id;
 	private String username;
-	private String password;
 	private String name;
 	private String lastname;
 	private String email;
@@ -20,7 +19,6 @@ public class CompleteUser {
 	public CompleteUser(User user, List<Task> tasks) {
 		this.id = user.getId();
 		this.username = user.getUsername();
-		this.password = user.getPassword();
 		this.name = user.getName();
 		this.lastname = user.getLastname();
 		this.email = user.getEmail();
