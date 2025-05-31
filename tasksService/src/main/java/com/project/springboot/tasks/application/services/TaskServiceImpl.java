@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.project.springboot.tasks.application.model.CreateTaskRequest;
 import com.project.springboot.tasks.application.model.DeleteAllTasksUserRequest;
 import com.project.springboot.tasks.application.model.DeleteTaskById;
+import com.project.springboot.tasks.application.model.ExistUsernameRequest;
 import com.project.springboot.tasks.application.model.GetTaskByIdRequest;
 import com.project.springboot.tasks.application.model.GetTasksForUserRequest;
 import com.project.springboot.tasks.application.model.Task;
@@ -24,10 +25,14 @@ public class TaskServiceImpl implements TaskService{
 	TasksRepository repository;
 	
 	@Autowired
+	UserServiceConnection service;
+	
+	@Autowired
 	Utils utils;
 	
 	@Override
 	public String createTask(CreateTaskRequest request) {
+		service.existUsername(new ExistUsernameRequest(request.getUsername()));
 		Task task = new Task();
 		task.setTitle(request.getTitle());
 		task.setDescription(request.getDescription());

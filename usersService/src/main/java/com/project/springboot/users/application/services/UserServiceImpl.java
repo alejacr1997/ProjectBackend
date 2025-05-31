@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public String createUser(SaveUserRequest request) {
-		if(validateUser(request.getUsername())) {
+		if(existUsername(request.getUsername())) {
 			throw new UserAlreadyExists("Username Already Exists Can Not Be Created");
 		}
 		User user = new User();
@@ -87,7 +87,8 @@ public class UserServiceImpl implements UserService{
 		return users;
 	}
 	
-	private boolean validateUser(String username) {
+	@Override
+	public boolean existUsername(String username) {
 		return repository.existsByUsername(username);
 	}
 

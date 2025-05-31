@@ -36,4 +36,11 @@ public class CustomExceptionsHandler {
 		ErrorResponse response = new ErrorResponse("ERR003", request.getMessage());
 		return new ResponseEntity<ErrorResponse>(response, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(UserDoesNotExist.class)
+	public ResponseEntity<ErrorResponse> handleUserDoesNotExist(UserDoesNotExist request){
+		logger.error("username does not exist");
+		ErrorResponse response = new ErrorResponse("ERR004", request.getMessage());
+		return new ResponseEntity<ErrorResponse>(response, HttpStatus.NOT_FOUND);
+	}
 }

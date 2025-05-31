@@ -1,9 +1,8 @@
 package com.project.springboot.tasks.infraestructure.controller;
 
-import java.util.List;
-
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import com.project.springboot.tasks.application.model.DeleteAllTasksUserRequest;
 import com.project.springboot.tasks.application.model.DeleteTaskById;
 import com.project.springboot.tasks.application.model.GetTaskByIdRequest;
 import com.project.springboot.tasks.application.model.GetTasksForUserRequest;
-import com.project.springboot.tasks.application.model.Task;
 import com.project.springboot.tasks.application.model.UpdateTaskRequest;
 import com.project.springboot.tasks.application.services.TaskService;
 
@@ -33,51 +31,51 @@ public class TasksController {
 	TaskService service;
 	
 	@PostMapping("createTask")
-	public String createTask(@Valid @RequestBody CreateTaskRequest request, BindingResult result) throws BadRequestException {
+	public ResponseEntity<?> createTask(@Valid @RequestBody CreateTaskRequest request, BindingResult result) throws BadRequestException {
 		if (result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Create Task");
 		}
-		return service.createTask(request);
+		return ResponseEntity.ok(service.createTask(request));
 	}
 	
 	@GetMapping("getTasksUser")
-	public List<Task> getTasksForUser(@Valid @ModelAttribute GetTasksForUserRequest request, BindingResult result) throws BadRequestException{
+	public ResponseEntity<?> getTasksForUser(@Valid @ModelAttribute GetTasksForUserRequest request, BindingResult result) throws BadRequestException{
 		if (result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Get Tasks For User");
 		}
-		return service.getTasksForUser(request);
+		return ResponseEntity.ok(service.getTasksForUser(request));
 	}
 	
 	@PutMapping("updateTask")
-	public String updateTask(@Valid @RequestBody UpdateTaskRequest request, BindingResult result) throws BadRequestException {
+	public ResponseEntity<?> updateTask(@Valid @RequestBody UpdateTaskRequest request, BindingResult result) throws BadRequestException {
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Update Task");
 		}
-		return service.updateTaskRequest(request);
+		return ResponseEntity.ok(service.updateTaskRequest(request));
 	}
 	
 	@GetMapping("getTaskId")
-	public Task getTaskById(@Valid @ModelAttribute GetTaskByIdRequest request, BindingResult result) throws BadRequestException {
+	public ResponseEntity<?> getTaskById(@Valid @ModelAttribute GetTaskByIdRequest request, BindingResult result) throws BadRequestException {
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Get Task By Id");
 		}
-		return service.getTaskById(request);
+		return ResponseEntity.ok(service.getTaskById(request));
 	}
 	
 	@DeleteMapping("deleteTaskId")
-	public String deleteTaskBtId(@Valid @RequestBody DeleteTaskById request, BindingResult result) throws BadRequestException {
+	public ResponseEntity<?> deleteTaskBtId(@Valid @RequestBody DeleteTaskById request, BindingResult result) throws BadRequestException {
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Delete Task By Id");
 		}
-		return service.deleteTaskById(request);
+		return ResponseEntity.ok(service.deleteTaskById(request));
 	}
 	
 	@DeleteMapping("deleteTaskUser")
-	public String deleteTaskForUser(@Valid @RequestBody DeleteAllTasksUserRequest request, BindingResult result) throws BadRequestException {
+	public ResponseEntity<?> deleteTaskForUser(@Valid @RequestBody DeleteAllTasksUserRequest request, BindingResult result) throws BadRequestException {
 		if(result.hasErrors()) {
 			throw new BadRequestException("Bad Request Service Delete Task By Id");
 		}
-		return service.deleteTasksForUser(request);
+		return ResponseEntity.ok(service.deleteTasksForUser(request));
 	}
 	
 }

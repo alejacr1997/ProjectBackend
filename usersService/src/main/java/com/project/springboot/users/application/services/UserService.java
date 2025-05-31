@@ -28,5 +28,7 @@ public interface UserService {
 	
 	public List<User> getAllUsers();
 	
+	public boolean existUsername(String username);
+	
 	
 }
