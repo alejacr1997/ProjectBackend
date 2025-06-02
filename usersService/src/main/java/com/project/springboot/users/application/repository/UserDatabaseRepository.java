@@ -8,8 +8,6 @@ public interface UserDatabaseRepository extends CrudRepository<User, Long> {
 
 	public User findByUsername(String username);
 	
-	public User findByEmailAndName(String email, String name);
-	
 	public boolean existsByUsername(String username);
 	
 }
