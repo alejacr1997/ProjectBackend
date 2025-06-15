@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
 	public String updateUser(UpdateUserRequest request) {
 		User user = new User();
 		user.setId(request.getId());
-		user.setUsername(request.getUsername());
+		user.setUsername(getUsername(request.getId()));
 		user.setName(utils.getFullName(request.getFirstname(), request.getMiddlename()));
 		user.setLastname(request.getLastname());
 		user.setEmail(request.getEmail());
@@ -119,6 +119,13 @@ public class UserServiceImpl implements UserService{
 		Optional<User> optional = repository.findById(id);
 		if(optional.isPresent()) {
 			return optional.get().getPassword();
+		}
+		throw new UserDoesNotExists("User does not exist, it can not be updated or found");
+	}
+	public String getUsername(Long id) {
+		Optional<User> optional = repository.findById(id);
+		if(optional.isPresent()) {
+			return optional.get().getUsername();
 		}
 		throw new UserDoesNotExists("User does not exist, it can not be updated or found");
 	}

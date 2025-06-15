@@ -56,12 +56,18 @@ public class TaskServiceConnectionImpl implements TaskServiceConnection {
 	@Override
 	public String deleteTasksOfUser(DeleteAllTasksUserRequest request) {
 		WebClient webClient = webClientBuilder.baseUrl(urlTaskService).build();
-		Mono<String> bodyToMono = webClient.method(HttpMethod.DELETE)
-									.uri(pathDeleteTaskForUser)
-									.bodyValue(request)
-									.retrieve()
-									.bodyToMono(String.class);
-		return bodyToMono.block();
+		try {
+			Mono<String> bodyToMono = webClient.method(HttpMethod.DELETE)
+					.uri(pathDeleteTaskForUser)
+					.bodyValue(request)
+					.retrieve()
+					.bodyToMono(String.class);
+			return bodyToMono.block();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+			return "tasks";
+		}
+		
 	}
 
 }
