@@ -37,7 +37,9 @@ public class UserServiceConnectionImpl implements UserServiceConnection {
 					)
 					.retrieve()
 					.bodyToMono(Boolean.class);
-			return bodyToMono.block();
+			boolean exists =bodyToMono.block();
+			if(exists) return exists;
+			throw new UserDoesNotExist("User does not exist, can not create task");
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 			throw new UserDoesNotExist("User does not exist, can not create task");
